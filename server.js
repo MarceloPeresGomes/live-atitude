@@ -7,7 +7,7 @@ const app = express();
 app.use(cors()); // permite a página no Skip consultar este servidor
 
 const HANDLE = 'AtitudeTV';            // handle do canal (@AtitudeTV)
-const API_KEY = 'AIzaSyCKlqmtzB8WO3V4tELtM-B9xOCkcCjemKM';    // ⚠️ TROQUE AQUI pela sua chave (começa com AIza...)
+const API_KEY = 'SUA_CHAVE_DE_API';    // ⚠️ NÃO TROQUE: mantenha a chave que já está no seu arquivo
 const PORT = 3000;
 
 let CHANNEL_ID = null;
@@ -26,7 +26,7 @@ async function resolveChannelId() {
 // ── 2) Inscrição automática no WebSub (notificação por push) ──
 async function subscribeWebSub() {
   const params = new URLSearchParams();
-  params.append('hub.callback', `https://SEU-DOMINIO-PUBLICO/webhook/youtube`); // ⚠️ TROQUE pela URL do Render depois
+  params.append('hub.callback', `https://live-atitude.onrender.com/webhook/youtube`); // URL do servidor no Render
   params.append('hub.topic', `https://www.youtube.com/xml/feeds/videos.xml?channel_id=${CHANNEL_ID}`);
   params.append('hub.mode', 'subscribe');
   params.append('hub.verify', 'async');
@@ -94,6 +94,24 @@ setInterval(async () => {
 // ── 8) Endpoint que a página no Skip consulta ──
 app.get('/api/live-status', (req, res) => {
   res.json(liveStatus);
+});
+
+// ── 9) Página de boas-vindas — aparece quando alguém abre o endereço direto ──
+app.get('/', (req, res) => {
+  res.send(`
+    <html>
+      <head>
+        <meta charset="UTF-8">
+        <title>Atitude TV — Servidor</title>
+      </head>
+      <body style="font-family: Arial, sans-serif; text-align: center; padding: 80px 20px; background: #1a1a2e; color: #ffffff;">
+        <h1>🙏 Servidor da Atitude TV</h1>
+        <p>Este servidor está no ar e aguardando a próxima transmissão ao vivo.</p>
+        <p>Para assistir ao culto, acesse a página oficial da igreja.</p>
+        <p style="color: #d4af37;">Igreja Batista Atitude — Barra da Tijuca, Rio de Janeiro</p>
+      </body>
+    </html>
+  `);
 });
 
 // ── Inicialização ──
