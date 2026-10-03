@@ -7,7 +7,7 @@ const app = express();
 app.use(cors()); // permite a página no Skip consultar este servidor
 
 const HANDLE = 'AtitudeTV';            // handle do canal (@AtitudeTV)
-const API_KEY = 'SUA_CHAVE_DE_API';    // ⚠️ TROQUE AQUI pela sua chave (começa com AIza...)
+const API_KEY = 'AIzaSyCKlqmtzB8WO3V4tELtM-B9xOCkcCjemKM';    // ⚠️ TROQUE AQUI pela sua chave (começa com AIza...)
 const PORT = 3000;
 
 let CHANNEL_ID = null;
